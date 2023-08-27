@@ -15,9 +15,9 @@ class Librarian {
     }
     private int RandomMemberId() {
         int randomId;
-        do {
-            randomId = new Random().nextInt(1000) + 1;
-        } while (isMemberIdUsed(randomId)); // Check if the ID is already in use
+//        do {
+            randomId = new Random().nextInt(1000000) + 1;
+//        } while (isMemberIdUsed(randomId)); // Check if the ID is already in use
         return randomId;
     }
 
@@ -31,26 +31,47 @@ class Librarian {
         String age = scanner.nextLine();
         System.out.print("Enter phone number: ");
         String ph_no = scanner.nextLine();
-
-        String data = name + "<" + ph_no + ">\n"; // Added line break
+        int newMemberId = RandomMemberId();
+        String data = name + "!" + age + "<" + ph_no + ">" + " Member ID: " + newMemberId + "\n";
+        writer.write(data);
         writer.write(data);
         writer.close();
-        System.out.println("Data appended successfully to the file.");
+        System.out.println("Data appended successfully to the file member with member id: "+ newMemberId);
     }
     void removeMember() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the Member ID to remove: ");
         int memberIdToRemove = scanner.nextInt();
 
-        // Code to remove the member with the provided ID from the 'members' list
-        // (You need to implement this part)
-        // For example:
-        // members.removeIf(member -> member.memberId == memberIdToRemove);
-        // Update the list according to your actual implementation
-
+        //open data file and remove the member with that id
         System.out.println("Member with Member ID: " + memberIdToRemove + " has been removed.");
     }
-}
+    void book_add() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter book title:");
+        String title = scanner.nextLine();
+        System.out.println("Enter author name");
+        String name = scanner.nextLine();
+        System.out.println("no of copies");
+        int number = scanner.nextInt();
+        String dat = title + "!" + "<" + name + ">" + number;
+        FileWriter writer = new FileWriter("books.txt", true);
+        writer.write(dat);
+        writer.write(dat);
+        writer.close();
+        System.out.println("Book Added Successfully!\n");
+    }
+        void remove_book() throws IOException {
+
+        }
+        void view_book() throws IOException {
+
+        }
+        void view_book_fine() throws IOException {
+
+        }
+    }
+
 
 class Member {
     void abc() {
@@ -78,11 +99,11 @@ public class Main {
             case 1:
                 Librarian lib = new Librarian();
                 lib.abc();
-                Scanner inp = new Scanner(System.in); // Corrected 'syste' to 'System'
+                Scanner inp = new Scanner(System.in);
                 switch (inp.nextInt()) {
                     case 1:
                         try {
-                            lib.register(); // Corrected 'Lib' to 'lib'
+                            lib.register();
                         } catch (IOException e) {
                             System.out.println("An error occurred: " + e.getMessage());
                         }
@@ -94,6 +115,38 @@ public class Main {
                             System.out.println("An error occurred: " + e.getMessage());
                         }
                         break;
+                    case 3:
+                        try{
+                            lib.book_add();
+                        }catch (IOException e) {
+                            System.out.println("An error occurred: " + e.getMessage());
+                        }
+                        break;
+                    case 4:
+                        try{
+                            lib.remove_book();
+                        }catch (IOException e) {
+                            System.out.println("An error occurred: " + e.getMessage());
+                        }
+                        break;
+                    case 5:
+                        try{
+                            lib.view_book_fine();
+                        }catch (IOException e) {
+                            System.out.println("An error occurred: " + e.getMessage());
+                        }
+                        break;
+                    case 6:
+                        try{
+                            lib.view_book();
+                        }catch (IOException e) {
+                            System.out.println("An error occurred: " + e.getMessage());
+                        }
+                        break;
+                    case 7:
+                        break;
+                    default:
+                        System.out.println("invalid input. try again");
                 }
                 break;
             case 2:
@@ -103,5 +156,8 @@ public class Main {
             case 3:
                 break;
         }
+        System.out.println("---------------------------------\n" +
+                "Thanks for visiting!\n" +
+                "---------------------------------\n");
     }
 }
